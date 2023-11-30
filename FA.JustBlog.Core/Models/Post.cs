@@ -10,7 +10,7 @@ namespace FA.JustBlog.Core.Models
         public int View { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        List<PostTag> PostTags { get; set; }
+        public List<PostTag> PostTags { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     }

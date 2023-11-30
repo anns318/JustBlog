@@ -15,7 +15,7 @@ namespace FA.JustBlog.Core.Controllers
 
         public IActionResult PopularTags()
         {
-            //List<Tag> tags = tagRepository.GetAll()
+            List<PostTagCountVM> tags = tagRepository.getPopularTag();
 
             return PartialView("_PopularTags",tagRepository.GetAll().Take(10).ToList());
         }

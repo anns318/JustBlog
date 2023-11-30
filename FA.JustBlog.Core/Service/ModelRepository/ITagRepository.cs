@@ -5,6 +5,6 @@ namespace FA.JustBlog.Core.Service.ModelRepository
 {
     public interface ITagRepository : IRepository<Tag>
     {
-        //public List<Tag> getPopularTag();
+        public List<PostTagCountVM> getPopularTag();
     }
 }
