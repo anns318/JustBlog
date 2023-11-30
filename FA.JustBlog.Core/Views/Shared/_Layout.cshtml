@@ -46,16 +46,31 @@
     <div class="container">
         <div class="col-lg-9 mx-auto">
             @RenderBody()
+            
+            
         </div>
         <div class="col-lg-3 mx-auto">
-            <partial name="_PartialAboutCard" for="@Model.Post" />
+            <partial name="_PartialAboutCard"/>
             
+        </div>
+        <div class="col-lg-9 mx-auto">
+            <h1>Most Viewed Post</h1>
+            <hr />
+            <div id="MostViewedPosts">
+            </div>
+        </div>
+        <div id="popularTag">
+
         </div>
     </div>
     <partial name="_Footer" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $('#MostViewedPosts').load("/Post/MostViewedPosts")
+        $('#popularTag').load("/Tag/PopularTags")
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

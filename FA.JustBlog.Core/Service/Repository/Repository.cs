@@ -5,7 +5,7 @@ namespace FA.JustBlog.Core.Service.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly BlogContext ctx;
+        protected readonly BlogContext ctx;
         public Repository(BlogContext ctx)
         {
             this.ctx = ctx;

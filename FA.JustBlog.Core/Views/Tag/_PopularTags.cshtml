@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Tag>
+
+<div class="d-flex gap-1 justify-content-end">
+    @foreach(var item in Model)
+    {
+       
+            <div class="border bg-black text-white p-1">
+            @item.Name
+            </div>
+      
+    }
+</div>
+

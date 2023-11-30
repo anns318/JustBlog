@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddDbContext<BlogContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("default"));

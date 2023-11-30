@@ -15,9 +15,9 @@ namespace FA.JustBlog.Core.Controllers
 
         public IActionResult Index()
         {
-            //List<Post> list = _postRepository.GetAll();
-            //return View(list.OrderByDescending(x => x.CreatedDate));
-            return View();
+            List<Post> list = _postRepository.GetAll();
+            return View(list.OrderByDescending(x => x.CreatedDate));
+            
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
