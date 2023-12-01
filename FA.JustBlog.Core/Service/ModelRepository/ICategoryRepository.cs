@@ -3,8 +3,8 @@ using FA.JustBlog.Core.Service.Repository;
 
 namespace FA.JustBlog.Core.Service.ModelRepository
 {
-    public interface ITagRepository : IRepository<Tag>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        public IEnumerable<PostTagCountVM> getPopularTag();
+        public IEnumerable<Post> PostByCategory(string cateName);
     }
 }

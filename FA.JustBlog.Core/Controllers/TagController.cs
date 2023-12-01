@@ -1,23 +1,23 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
+using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FA.JustBlog.Core.Controllers
 {
     public class TagController : Controller
-    {
-        private readonly ITagRepository tagRepository;
-
-        public TagController(ITagRepository tagRepository)
+    {   
+        private readonly IUnitOfWork unitOfWork;
+        public TagController(IUnitOfWork unitOfWork)
         {
-            this.tagRepository = tagRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public IActionResult PopularTags()
         {
-            List<PostTagCountVM> tags = tagRepository.getPopularTag();
+            IEnumerable<PostTagCountVM> tags = unitOfWork.tagRepository.getPopularTag();
 
-            return PartialView("_PopularTags",tagRepository.GetAll().Take(10).ToList());
+            return PartialView("_PopularTags", tags);
         }
     }
 }

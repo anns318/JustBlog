@@ -1,24 +1,30 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
+using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FA.JustBlog.Core.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IPostRepository _postRepository;
-        public PostController(IPostRepository postRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public PostController(IUnitOfWork unitOfWork)
         {
-            _postRepository = postRepository;
+            this.unitOfWork = unitOfWork;
+        }
+        public IActionResult PostDetail(int year, int month, string title)
+        {
+            var post = unitOfWork.postRepository.FindPost(year, month, title);
+            return View(post);
         }
         public IActionResult MostViewedPosts()
         {
-            List<Post> list = _postRepository.GetAll().OrderByDescending(x=>x.View).Take(5).ToList();
+            List<Post> list = unitOfWork.postRepository.GetAll().OrderByDescending(x => x.View).Take(5).ToList();
             return PartialView("_ListPost", list);
         }
         public IActionResult LatestPosts()
         {
-            List<Post> list = _postRepository.GetAll().OrderByDescending(x => x.CreatedDate).Take(5).ToList();
+            List<Post> list = unitOfWork.postRepository.GetAll().OrderByDescending(x => x.CreatedDate).Take(5).ToList();
             return PartialView("_ListPost", list);
         }
     }

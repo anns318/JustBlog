@@ -1,5 +1,6 @@
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
+using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddDbContext<BlogContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("default"));
+    options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("default"));
 });
 
 var app = builder.Build();
@@ -32,6 +36,16 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+app.MapControllerRoute(
+    name: "PostDetail",
+    pattern: "{controller=Post}/{year}/{month}/{title}",
+    defaults : new {controller = "Post", action = "PostDetail" }
+    );
+app.MapControllerRoute(
+    name: "PostByCategory",
+    pattern: "{controller=Category}/{name}",
+    defaults: new { controller = "Category", action = "PostByCategory" }
+    );
 app.Run();

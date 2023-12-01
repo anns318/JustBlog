@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Category>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Category" asp-action="@item.Name.Replace(" ","-")">@item.Name</a>
+
+    </li>
+}

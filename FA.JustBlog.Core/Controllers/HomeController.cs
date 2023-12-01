@@ -1,5 +1,6 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
+using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,16 +8,16 @@ namespace FA.JustBlog.Core.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPostRepository _postRepository;
-        public HomeController(IPostRepository postRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _postRepository = postRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Post> list = _postRepository.GetAll();
-            return View(list.OrderByDescending(x => x.CreatedDate));
+           
+            return View();
             
         }
         
