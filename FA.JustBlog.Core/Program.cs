@@ -48,4 +48,13 @@ app.MapControllerRoute(
     pattern: "{controller=Category}/{name}",
     defaults: new { controller = "Category", action = "PostByCategory" }
     );
+app.MapControllerRoute(
+    name: "PostByTag",
+    pattern: "{controller=Tag}/{name}",
+    defaults: new { controller = "Tag", action = "PostByTag" }
+    );
+app.MapAreaControllerRoute(
+    name: "AdminArea",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 app.Run();

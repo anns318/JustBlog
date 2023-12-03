@@ -45,14 +45,17 @@
     </header>
   
     <div class="container">
-        <div class="col-lg-9 mx-auto">
-            @RenderBody()
-            
-            
-        </div>
-        <div class="col-lg-3 mx-auto">
-            <partial name="~/Views/Home/_PartialAboutCard.cshtml"/>
-            
+        <div class="d-flex" style="gap:10px">
+            <div >
+                @RenderBody()
+
+
+            </div>
+            <div style="display: flex;flex-direction: column;align-items: center;">
+                <partial name="~/Views/Home/_PartialAboutCard.cshtml" />
+                <div id="popularTag">
+                </div>
+            </div>
         </div>
         <div class="col-lg-9 mx-auto">
             <h1>Most Viewed Post</h1>
@@ -60,9 +63,7 @@
             <div id="MostViewedPosts">
             </div>
         </div>
-        <div id="popularTag">
-
-        </div>
+       
     </div>
     <partial name="_Footer" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

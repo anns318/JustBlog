@@ -9,7 +9,21 @@ namespace FA.JustBlog.Core.Service.ModelRepository
         public TagRepository(BlogContext ctx) : base(ctx)
         {
         }
+        public IEnumerable<Post> GetPostByTagName(string name)
+        {
+            var Tag = ctx.Tags.Where(t => t.Name == name.Replace("-"," ")).FirstOrDefault();
+            if(Tag == null)
+            {
+                return null;
+            }
+            List<Post> posts = new List<Post>();
+            foreach (var post in Tag.PostTags)
+            {
+                posts.Add(post.Post);
+            }
 
+            return posts;
+        }
         public IEnumerable<PostTagCountVM> getPopularTag()
         {
             var query = (from t in ctx.Tags

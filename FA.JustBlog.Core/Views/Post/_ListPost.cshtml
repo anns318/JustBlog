@@ -4,40 +4,84 @@
 *@
 @model IEnumerable<Post>
 @{
-    // var tags = 
+    string FormatDateTime(DateTime dt)
+    {
+        var timeDifference = DateTime.Now - dt;
+
+        if (timeDifference.TotalMilliseconds < 60000) 
+        {
+            int secondsAgo = (int)timeDifference.TotalSeconds;
+            return $"Posted on {secondsAgo} second{(secondsAgo != 1 ? "s" : "")} ago";
+        }
+        else if (timeDifference.TotalMilliseconds < 3600000)
+        {
+            int minutesAgo = (int)timeDifference.TotalMinutes;
+            return $"Posted on {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago";
+        }
+        else if (timeDifference.TotalMilliseconds < 86400000) 
+        {
+            int hoursAgo = (int)timeDifference.TotalHours;
+            return $"Posted on {hoursAgo} hour{(hoursAgo != 1 ? "s" : "")} ago";
+        }
+        else if (timeDifference.TotalMicroseconds < 172800000)
+        {
+            return $"Posted on Yesterday on {timeDifference.Hours}:{timeDifference.Minutes}";
+        }
+        else // More than 2 days
+        {
+            
+            return $"Posted on {dt}";
+
+        }
+    }
 }
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            @foreach (var item in Model)
-            {
+        <div class="" style="min-width:769px">
+            @{
+                if(Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
 
-                <!-- Post preview-->
-                <div class="post-preview">
-                    <a href="/Post/@item.CreatedDate.Year/@item.CreatedDate.Month/@item.Title.Replace(" ","-")">
-                        <h2 class="post-title">@item.Title</h2>
+                        <!-- Post preview-->
+                        <div class="post-preview">
+                            <a href="/Post/@item.CreatedDate.Year/@item.CreatedDate.Month/@item.Title.Replace(" ","-")">
+                                <h2 class="post-title">@item.Title</h2>
 
-                    </a>
-                    <p class="post-meta">
-                        Posted by @item.CreatedDate by @item.View view(s)
-                    </p>
-                    <p>
-                        Category: <a class="text-decoration-underline" asp-action="@item.Category.Name.Replace(" ","-")" asp-controller="Category">
-                            @item.Category.Name
-                        </a>
-                    </p>
-                    <p>
-                        Tag: @{
-                            // var tag = from x in item.PostTags
-                        }
-                    </p>
+                            </a>
+                            <p class="post-meta">
+                               @FormatDateTime(item.CreatedDate) by @item.View view(s)
+                            </p>
+                            <p>
+                                Category: <a class="text-decoration-underline" asp-action="@item.Category.Name.Replace(" ","-")" asp-controller="Category">
+                                    @item.Category.Name
+                                </a>
+                            </p>
+                            <p>
+                                Tag: @{
+                                    var tag = from x in item.PostTags
+                                              select x;
+                                    foreach (var item2 in tag)
+                                    {
+                                        <a asp-controller="Tag" asp-action="@item2.Tag.Name.Replace(" ","-")" class="border bg-black text-white p-1">@item2.Tag.Name</a>
+                                    }
+                                }
+                            </p>
 
-                    <p class="post-subtitle">@item.Content</p>
-                </div>
+                            <p class="post-subtitle">@item.Content</p>
+                        </div>
 
-                <hr class="my-4">
+                        <hr class="my-4">
+
+                    }
+                }else
+                {
+                    <p>No post in this tag</p>
+                }
 
             }
+            
 
         </div>
     </div>

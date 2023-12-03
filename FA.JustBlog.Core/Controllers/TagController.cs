@@ -19,5 +19,10 @@ namespace FA.JustBlog.Core.Controllers
 
             return PartialView("_PopularTags", tags);
         }
+        public IActionResult PostByTag(string name)
+        {
+            var listPost = unitOfWork.tagRepository.GetPostByTagName(name);
+            return View("~/Views/Post/_ListPost.cshtml", listPost);
+        }
     }
 }

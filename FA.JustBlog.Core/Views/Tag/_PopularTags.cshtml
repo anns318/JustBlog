@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PostTagCountVM>
 
-<div class="d-flex gap-1 justify-content-end">
+<div class="d-flex flex-wrap mt-5">
     @foreach (var item in Model)
     {
         <a asp-controller="Tag" asp-action="@item.TagName.Replace(" ","-")" class="border bg-black text-white p-1">
