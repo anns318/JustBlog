@@ -33,15 +33,20 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.MapAreaControllerRoute(
+   name: "defaultAdmin",
+   areaName: "Admin",
+    pattern: "Admin/{controller=Post}/{action=Index}/{id?}",
+    defaults: new { area = "Admin", controller = "Post", action = "Index" }
+    );
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
     );
 app.MapControllerRoute(
     name: "PostDetail",
-    pattern: "{controller=Post}/{year}/{month}/{title}",
-    defaults : new {controller = "Post", action = "PostDetail" }
+    pattern: "{controller}/{year}/{month}/{title}",
+    defaults: new { action="PostDetail"}
     );
 app.MapControllerRoute(
     name: "PostByCategory",
@@ -51,10 +56,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "PostByTag",
     pattern: "{controller=Tag}/{name}",
-    defaults: new { controller = "Tag", action = "PostByTag" }
+    defaults: new { controller = "Tag", action = "PostByTag" } 
     );
-app.MapAreaControllerRoute(
-    name: "AdminArea",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+
 app.Run();
