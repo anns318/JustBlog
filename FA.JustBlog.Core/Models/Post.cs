@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FA.JustBlog.Core.Models
 {
@@ -8,9 +9,10 @@ namespace FA.JustBlog.Core.Models
         public string Title {  get; set; }
         public string Content {  get; set; }
         public int View { get; set; }
+        [DisplayName("Category")]
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual List<PostTag> PostTags { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual List<PostTag>? PostTags { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     }

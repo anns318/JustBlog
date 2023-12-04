@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 @* <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select> *@
-                <select class="form-control">
+                <select class="form-control" asp-for="CategoryId">
                     @foreach (var item in ViewBag.Categories)
                     {
                         <option asp-for="CategoryId" value="@item.Id">@item.Name</option>

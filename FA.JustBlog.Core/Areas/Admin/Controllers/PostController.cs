@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
+using FA.JustBlog.Core.Service.UnitOfWork;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
@@ -13,10 +14,12 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
     public class PostController : Controller
     {
         private readonly BlogContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PostController(BlogContext context)
+        public PostController(BlogContext context, IUnitOfWork unitOfWork)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Admin/Post
@@ -62,11 +65,12 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
-                await _context.SaveChangesAsync();
+                _unitOfWork.postRepository.Add(post);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", post.CategoryId);
+
+            var listCate = _context.Categories.ToList();
+            ViewBag.Categories = listCate;
             return View(post);
         }
 
