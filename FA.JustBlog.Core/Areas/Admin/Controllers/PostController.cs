@@ -23,10 +23,11 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page =1)
         {
-            var blogContext = _context.Posts.Include(p => p.Category);
-            return View(await blogContext.ToListAsync());
+            Console.WriteLine(page);
+            var blogContext = await _context.Posts.ToListAsync();
+            return View( blogContext.AsQueryable());
         }
 
         // GET: Admin/Post/Details/5

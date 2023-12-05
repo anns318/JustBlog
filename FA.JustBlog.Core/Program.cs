@@ -34,9 +34,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapAreaControllerRoute(
-   name: "defaultAdmin",
-   areaName: "Admin",
-    pattern: "Admin/{controller=Post}/{action=Index}/{id?}",
+    name: "defaultAdmin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Post}/{action=Index}/{page?}",
     defaults: new { area = "Admin", controller = "Post", action = "Index" }
     );
 app.MapControllerRoute(

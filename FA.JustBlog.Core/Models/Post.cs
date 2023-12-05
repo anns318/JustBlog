@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FA.JustBlog.Core.Models
@@ -13,6 +14,7 @@ namespace FA.JustBlog.Core.Models
         public int CategoryId { get; set; }
         public virtual Category? Category { get; set; }
         public virtual List<PostTag>? PostTags { get; set; }
+        [DisplayName("Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     }
