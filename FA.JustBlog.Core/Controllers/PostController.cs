@@ -19,12 +19,12 @@ namespace FA.JustBlog.Core.Controllers
         }
         public IActionResult MostViewedPosts()
         {
-            List<Post> list = unitOfWork.postRepository.GetAll().OrderByDescending(x => x.View).Take(5).ToList();
+            List<Post> list = unitOfWork.postRepository.Find(x=>x.IsPublished).OrderByDescending(x => x.View).Take(5).ToList();
             return PartialView("_ListPost", list);
         }
         public IActionResult LatestPosts()
         {
-            List<Post> list = unitOfWork.postRepository.GetAll().OrderByDescending(x => x.CreatedDate).Take(5).ToList();
+            List<Post> list = unitOfWork.postRepository.Find(x => x.IsPublished).OrderByDescending(x => x.CreatedDate).Take(5).ToList();
             return PartialView("_ListPost", list);
         }
     }

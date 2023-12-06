@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/Admin/style.css" asp-append-version="true" />
     <link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet">
     <script src="~/js/mvc-grid/mvc-grid.js"></script>
-    <script src="~/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#mytextarea'
@@ -47,21 +47,21 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            
+                            <div class="sb-sidenav-menu-heading">Manage</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                Post
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="/admin/Post/Index?sortBy=Recent">Most Recent Post</a>
+                                    <a class="nav-link" href="/admin/Post/Index?sortBy=Viewed">Most Viewed Post</a>
+                                    <a class="nav-link" href="/admin/Post/Index?sortBy=Interesting">Most Interesting Post</a>
+                                    <a class="nav-link" href="/admin/Post/Index?filtering=published">Published Post</a>
+                                    <a class="nav-link" href="/admin/Post/Index?filtering=unpublished">Un-Published Post</a>
+
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.UnitOfWork;
+using FA.JustBlog.Core.PaginateList;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
@@ -23,11 +24,53 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post
-        public async Task<IActionResult> Index(int? page =1)
+        public async Task<IActionResult> Index(string sortBy,string filtering,int page = 1)
         {
-            Console.WriteLine(page);
-            var blogContext = await _context.Posts.ToListAsync();
-            return View( blogContext.AsQueryable());
+            if(page < 1)
+            {
+                page = 1;
+            }
+            var blogContext = from p in _context.Posts
+                              select p;
+            if(blogContext == null)
+            {
+
+                return View(null);
+            }
+            if (!string.IsNullOrWhiteSpace(filtering))
+            {
+                if(filtering.ToLower() == "published")
+                {
+                    ViewData["filtering"] = filtering;
+                    blogContext = blogContext.Where(x => x.IsPublished);
+                }else if(filtering.ToLower() == "unpublished")
+                {
+                    ViewData["filtering"] = filtering;
+                    blogContext = blogContext.Where(x => !x.IsPublished);
+
+                }
+            }
+            if(!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy.ToLower() == "viewed")
+                {
+                    ViewBag.SortBy = sortBy;
+                    blogContext = blogContext.OrderByDescending(x => x.View);
+                } else if (sortBy.ToLower() == "recent")
+                {
+                    ViewBag.SortBy = sortBy;
+                    blogContext = blogContext.OrderByDescending(x => x.CreatedDate);
+                } else if (sortBy.ToLower() == "interesting")
+                {
+                    ViewBag.SortBy = sortBy;
+                    //blogContext = blogContext.SelectMany(p => p.PostRate)
+                    //    .GroupBy(x => x.PostId)
+                    //    .Select(x => new Post { PostId = x.Key,})
+                    //    .OrderByDescending(x => x.Average(g => g.Rate));
+                }
+                   
+            }
+            return View( await PaginatedList<Post>.CreateAsync(blogContext, page, 2));
         }
 
         // GET: Admin/Post/Details/5
@@ -88,7 +131,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", post.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post);
             return View(post);
         }
 

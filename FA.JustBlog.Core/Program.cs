@@ -33,12 +33,24 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+//app.MapAreaControllerRoute(
+//    name: "PostSort",
+//    areaName: "Admin",
+//    pattern: "Admin/{controller}/{action}/{sortBy?}",
+//    defaults: new { area = "Admin", controller = "Post", action = "Index" }
+//    );
 app.MapAreaControllerRoute(
     name: "defaultAdmin",
     areaName: "Admin",
-    pattern: "Admin/{controller=Post}/{action=Index}/{page?}",
+    pattern: "Admin/{controller=Post}/{action=Index}/{id?}",
     defaults: new { area = "Admin", controller = "Post", action = "Index" }
     );
+//app.MapAreaControllerRoute(
+//    name: "PostWithPageAndFilter",
+//    areaName: "Admin",
+//    pattern: "Admin/{controller=Post}/{action=Index}/{sortBy?}/{page?}",
+//    defaults: new { area = "Admin", controller = "Post", action = "Index" }
+//    );
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"

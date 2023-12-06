@@ -1,5 +1,6 @@
-﻿@using NonFactors.Mvc.Grid
-@model IEnumerable<FA.JustBlog.Core.Models.Post>
+﻿@using FA.JustBlog.Core.PaginateList
+@using NonFactors.Mvc.Grid
+@model PaginatedList<FA.JustBlog.Core.Models.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,47 +16,79 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.TObject.Title)
             </th>
-         @*    <th>
-                @Html.DisplayNameFor(model => model.Content)
+            @* <th>
+            @Html.DisplayNameFor(model => model.TObject.Content)
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.View)
+                @Html.DisplayNameFor(model => model.TObject.View)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model.TObject.Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
+                @Html.DisplayNameFor(model => model.TObject.CreatedDate)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.TObject.IsPublished)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.TObject.PostRate)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.Content)
+        @if (Model.Count == 0)
+        {
+            <p>Don't have any data for this page</p>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    @* <td>
+            @Html.DisplayFor(modelItem => item.Content)
             </td> *@
-            <td>
-                @Html.DisplayFor(modelItem => item.View)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.View)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.IsPublished)
+                    </td>
+                   
+                    @{
+                        var postRate = (from x in item.PostRate
+                                        group x by x.PostId into g
+                                        select new
+                                        {
+                                            rate = g.Average(r => r.Rate)
+                                        }).FirstOrDefault();
+                        <td class="text-center">@(postRate?.rate == null ? 0 : postRate.rate)</td>
+                    }
+                    
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        }
     </tbody>
+
 </table>
+<a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
+<a class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex + 1)">Next</a>

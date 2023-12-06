@@ -2,8 +2,9 @@
 
 namespace FA.JustBlog.Core.PaginateList
 {
-    public class PaginatedList<T> : List<T>
+    public class PaginatedList<T> : List<T> where T : class
     {
+        public T TObject;
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
 
