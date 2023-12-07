@@ -4,14 +4,26 @@
 
 @{
     ViewData["Title"] = "Index";
+    var filtering = ViewData["filtering"];
+    var sortBy = ViewBag.sortBy;
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a>   
 </p>
+<form method="get" asp-action="Index" id="formSetPageSize">
+    <select onchange="setPageSize(this)" id="pageSizeSelect" name="pageSize">
 
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+    </select>
+    @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
+    @(filtering != null ? Html.Raw($"<input hidden name='filtering' value='{filtering}' />") : "")
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -75,7 +87,7 @@
                                         {
                                             rate = g.Average(r => r.Rate)
                                         }).FirstOrDefault();
-                        <td class="text-center">@(postRate?.rate == null ? 0 : postRate.rate)</td>
+                                            <td class="text-center">@(postRate?.rate == null ? 0 : postRate.rate)</td>
                     }
                     
                     <td>
@@ -90,5 +102,27 @@
     </tbody>
 
 </table>
-<a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
-<a class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex + 1)">Next</a>
+<a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
+@{
+    for(int i =1; i <= Model.TotalPages; i++)
+    {
+                <a class="btn btn-primary @(Model.PageIndex == i ? "active" : "")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@i">@i</a>
+    }
+}
+
+<a class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")" asp-route-pageSize = "@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex + 1)">Next</a>
+
+
+@section Scripts{
+    <script>
+        function setPageSize(e) {
+            $("#formSetPageSize").submit();
+        }
+        console.log(@ViewBag.PageSize )
+        if (@ViewBag.PageSize != null) {
+            $("#pageSizeSelect").val(@ViewBag.PageSize)
+
+        } 
+      
+    </script>
+}

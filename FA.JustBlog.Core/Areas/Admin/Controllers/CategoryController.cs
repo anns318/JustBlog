@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
+using FA.JustBlog.Core.PaginateList;
+using System.Drawing.Printing;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
@@ -20,11 +22,36 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Category
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortBy, string filtering, int page = 1, int pageSize = 10)
         {
-              return _context.Categories != null ? 
-                          View(await _context.Categories.ToListAsync()) :
-                          Problem("Entity set 'BlogContext.Categories'  is null.");
+            var cate = from c in _context.Categories
+                       select c;
+            ViewBag.PageSize = pageSize;
+            ViewBag.SortBy = sortBy;
+
+
+            if (!string.IsNullOrWhiteSpace(filtering))
+            {
+                ViewData["filtering"] = filtering;
+                cate = cate.Where(x=>x.Name.Contains(filtering));
+
+            }
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy.ToLower() == "name")
+                {
+                    cate = cate.OrderByDescending(x => x.Name);
+                }
+                else if (sortBy.ToLower() == "createdDate")
+                {
+                    cate = cate.OrderByDescending(x => x.CreatedDate);
+
+                }
+            }
+
+           
+            return View(await PaginatedList<Category>.CreateAsync(cate, page, pageSize));
         }
 
         // GET: Admin/Category/Details/5
@@ -150,14 +177,14 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             {
                 _context.Categories.Remove(category);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace FA.JustBlog.Core.Models
         public virtual List<PostTag>? PostTags { get; set; }
         [DisplayName("Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public virtual List<PostRate> PostRate { get; set; }
+        public virtual List<PostRate>? PostRate { get; set; }
         public bool IsPublished { get; set; } = false;
     }
 }

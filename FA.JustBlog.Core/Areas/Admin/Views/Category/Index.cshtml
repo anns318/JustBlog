@@ -1,7 +1,11 @@
-﻿@model IEnumerable<FA.JustBlog.Core.Models.Category>
+﻿@using FA.JustBlog.Core.PaginateList
+@model PaginatedList<FA.JustBlog.Core.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
+    var pageSize = ViewBag.PageSize;
+    var sortBy = ViewData["sortBy"];
+    var filtering = ViewData["filtering"];
 }
 
 <h1>Index</h1>
@@ -9,21 +13,34 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form method="get" asp-action="Index" id="formSetPageSize">
+    <select onchange="setPageSize(this)" id="pageSizeSelect" name="pageSize">
 
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+    </select>
+    @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
+
+</form>
+<form method="get" asp-action="Index" id="formSetPageSize">
+    
+    @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
+
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+               
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="name"> @Html.DisplayNameFor(model => model.TObject.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.TObject.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PostId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="createdDate">@Html.DisplayNameFor(model => model.TObject.CreatedDate)</a>
             </th>
             <th></th>
         </tr>
@@ -38,9 +55,6 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PostId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td>
@@ -52,3 +66,27 @@
 }
     </tbody>
 </table>
+<a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
+@{
+    for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a class="btn btn-primary @(Model.PageIndex == i ? "active" : "")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@i">@i</a>
+    }
+}
+
+<a class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex + 1)">Next</a>
+
+
+@section Scripts {
+    <script>
+        function setPageSize(e) {
+            $("#formSetPageSize").submit();
+        }
+        console.log(@ViewBag.PageSize )
+        if (@ViewBag.PageSize != null) {
+            $("#pageSizeSelect").val(@ViewBag.PageSize)
+
+        }
+
+    </script>
+}

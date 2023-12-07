@@ -24,8 +24,9 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post
-        public async Task<IActionResult> Index(string sortBy,string filtering,int page = 1)
+        public async Task<IActionResult> Index(string sortBy,string filtering,int page = 1,int pageSize = 10)
         {
+
             if(page < 1)
             {
                 page = 1;
@@ -63,14 +64,27 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 } else if (sortBy.ToLower() == "interesting")
                 {
                     ViewBag.SortBy = sortBy;
-                    //blogContext = blogContext.SelectMany(p => p.PostRate)
-                    //    .GroupBy(x => x.PostId)
-                    //    .Select(x => new Post { PostId = x.Key,})
-                    //    .OrderByDescending(x => x.Average(g => g.Rate));
+                    
+                    blogContext = from p in _context.Posts.DefaultIfEmpty()
+                                  join x in
+                                      (from pr in _context.PostRate
+                                       group pr by pr.PostId into g
+                                       select new
+                                       {
+                                           PostId = g.Key,
+                                           AVGRate = g.Average(pr => pr.Rate)
+                                       })
+                                  on p.Id equals x.PostId into postrate
+                                  from pr in postrate.DefaultIfEmpty()
+                                  orderby pr.AVGRate descending
+                                  select p;
+
                 }
                    
             }
-            return View( await PaginatedList<Post>.CreateAsync(blogContext, page, 2));
+            ViewBag.PageSize = pageSize;
+
+            return View(await PaginatedList<Post>.CreateAsync(blogContext, page, pageSize));
         }
 
         // GET: Admin/Post/Details/5
@@ -97,6 +111,8 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         {
             var listCate = _context.Categories.ToList();
             ViewBag.Categories = listCate;
+            var listTag = _context.Tags.ToList();
+            ViewBag.Tags = listTag;
             return View();
         }
 
@@ -105,14 +121,20 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,View,CategoryId,CreatedDate")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,View,CategoryId,CreatedDate,IsPublished")] Post post,List<int> PostTags)
         {
             if (ModelState.IsValid)
             {
                 _unitOfWork.postRepository.Add(post);
+                foreach(var tagid in PostTags)
+                {
+                    _context.PostTag.Add(new PostTag { PostId = post.Id, TagId = tagid });
+                }
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
+            var listTag = _context.Tags.ToList();
+            ViewBag.Tags = listTag;
             var listCate = _context.Categories.ToList();
             ViewBag.Categories = listCate;
             return View(post);
