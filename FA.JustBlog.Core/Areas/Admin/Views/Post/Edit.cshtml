@@ -1,7 +1,9 @@
-﻿@model FA.JustBlog.Core.Models.Post
+﻿@using FA.JustBlog.Core.Areas.Admin.ViewModel;
+@model FA.JustBlog.Core.Models.Post
 
 @{
     ViewData["Title"] = "Edit";
+    var listTag = (IEnumerable<ListPostTag>) ViewBag.ListTag;
 }
 
 <h1>Edit</h1>
@@ -38,6 +40,25 @@
                 <input asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div> *@
+            <div class="form-group">
+                <label asp-for="PostTags" class="control-label"></label>
+                <select multiple name="PostTags" class="form-control">
+                    @{
+                        foreach (var item in listTag)
+                        {
+                            // if (item.IsSelected)
+                            // {
+                            //     <option value="@item.TagId" selected>@item.TagName</option>
+                            // }else
+                            // {
+                            //     <option value="@item.TagId" >@item.TagName</option>
+
+                            // }
+                        }
+                    }
+                </select>
+
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

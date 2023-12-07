@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.UnitOfWork;
 using FA.JustBlog.Core.PaginateList;
+using FA.JustBlog.Core.Areas.Admin.ViewModel;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
@@ -154,6 +155,22 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post);
+            var listTag = from T in _context.Tags
+                          join x in (
+                            from p in _context.Posts
+                            join pt in _context.PostTag on p.Id equals pt.Id
+                            where p.Id == id
+                            select pt
+                          ) on T.Id equals x.TagId into gj
+                          from sub in gj.DefaultIfEmpty()
+                          select new ListPostTag
+                          {
+                              TagId = T.Id,
+                              TagName = T.Name,
+                              IsSelected = sub.TagId > 0 ? sub.TagId : 0
+                          };
+
+            ViewBag.ListTag = listTag.ToList();
             return View(post);
         }
 
