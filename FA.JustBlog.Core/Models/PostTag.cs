@@ -9,7 +9,7 @@ namespace FA.JustBlog.Core.Models
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
         [ForeignKey(nameof(Tag))]
-        public int TagId { get; set; }
+        public Nullable<int> TagId { get; set; } = 0;
         public virtual Tag Tag { get; set; }
     }
 }

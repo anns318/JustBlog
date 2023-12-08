@@ -6,6 +6,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public virtual List<PostTag> PostTags { get; set; }
+        public virtual List<PostTag>? PostTags { get; set; }
     }
 }

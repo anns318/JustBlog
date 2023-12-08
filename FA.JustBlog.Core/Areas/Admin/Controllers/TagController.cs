@@ -7,33 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
-using System.Drawing.Printing;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class TagController : Controller
     {
         private readonly BlogContext _context;
 
-        public CategoryController(BlogContext context)
+        public TagController(BlogContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Category
+        // GET: Admin/Tag
         public async Task<IActionResult> Index(string sortBy, string filtering, int page = 1, int pageSize = 10)
         {
-            var cate = from c in _context.Categories
-                       select c;
             ViewBag.PageSize = pageSize;
             ViewBag.SortBy = sortBy;
+            ViewData["filtering"] = filtering;
 
-
+            var tag = from b in _context.Tags
+                          select b;
             if (!string.IsNullOrWhiteSpace(filtering))
             {
                 ViewData["filtering"] = filtering;
-                cate = cate.Where(x=>x.Name.Contains(filtering));
+                tag = tag.Where(x => x.Name.Contains(filtering));
 
             }
 
@@ -41,83 +40,81 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             {
                 if (sortBy.ToLower() == "name")
                 {
-                    cate = cate.OrderByDescending(x => x.Name);
+                    tag = tag.OrderByDescending(x => x.Name);
                 }
                 else if (sortBy.ToLower() == "createdDate")
                 {
-                    cate = cate.OrderByDescending(x => x.CreatedDate);
+                    tag = tag.OrderByDescending(x => x.CreatedDate);
 
                 }
             }
-
-           
-            return View(await PaginatedList<Category>.CreateAsync(cate, page, pageSize));
+            return View(await PaginatedList<Tag>.CreateAsync(tag, page, pageSize));
         }
 
-        // GET: Admin/Category/Details/5
+        // GET: Admin/Tag/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Tags == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var tag = await _context.Tags
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(tag);
         }
 
-        // GET: Admin/Category/Create
+        // GET: Admin/Tag/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Category/Create
+        // POST: Admin/Tag/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedDate")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedDate")] Tag tag)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(tag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(tag);
         }
 
-        // GET: Admin/Category/Edit/5
+        // GET: Admin/Tag/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Tags == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(tag);
         }
 
-        // POST: Admin/Category/Edit/5
+        // POST: Admin/Tag/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedDate")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedDate")] Tag tag)
         {
-            if (id != category.Id)
+            if (id != tag.Id)
             {
                 return NotFound();
             }
@@ -126,12 +123,12 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(tag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!TagExists(tag.Id))
                     {
                         return NotFound();
                     }
@@ -142,49 +139,49 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(tag);
         }
 
-        // GET: Admin/Category/Delete/5
+        // GET: Admin/Tag/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Tags == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var tag = await _context.Tags
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(tag);
         }
 
-        // POST: Admin/Category/Delete/5
+        // POST: Admin/Tag/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
+            if (_context.Tags == null)
             {
-                return Problem("Entity set 'BlogContext.Categories'  is null.");
+                return Problem("Entity set 'BlogContext.Tags'  is null.");
             }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag != null)
             {
-                _context.Categories.Remove(category);
+                _context.Tags.Remove(tag);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool TagExists(int id)
         {
-            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Tags?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

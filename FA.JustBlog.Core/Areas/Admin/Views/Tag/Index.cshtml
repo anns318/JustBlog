@@ -1,18 +1,13 @@
 ﻿@using FA.JustBlog.Core.PaginateList
-@model PaginatedList<FA.JustBlog.Core.Models.Category>
-
+@model PaginatedList<FA.JustBlog.Core.Models.Tag>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tag";
     var pageSize = ViewBag.PageSize;
     var sortBy = ViewData["sortBy"];
     var filtering = ViewData["filtering"];
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <div class="d-flex justify-content-between align-center">
     <form method="get" asp-action="Index" id="formSetPageSize">
         <select onchange="setPageSize(this)" id="pageSizeSelect" name="pageSize">
@@ -27,18 +22,20 @@
 
     </form>
     <form method="get" asp-action="Index" asp-action="index">
-        <input type="text" value="@filtering" name="filtering" />
+        <input value="@filtering" type="text" name="filtering" />
         @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
         @(pageSize != null ? Html.Raw($"<input hidden name='pageSize' value='{pageSize}' />") : "")
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-               
-                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="name"> @Html.DisplayNameFor(model => model.TObject.Name)</a>
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="name">@Html.DisplayNameFor(model => model.TObject.Name)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TObject.Description)
@@ -70,6 +67,7 @@
 }
     </tbody>
 </table>
+
 <a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
 @{
     for (int i = 1; i <= Model.TotalPages; i++)
@@ -86,7 +84,6 @@
         function setPageSize(e) {
             $("#formSetPageSize").submit();
         }
-        console.log(@ViewBag.PageSize )
         if (@ViewBag.PageSize != null) {
             $("#pageSizeSelect").val(@ViewBag.PageSize)
 

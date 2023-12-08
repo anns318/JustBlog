@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FA.JustBlog.Core.Models;
+using FA.JustBlog.Core.PaginateList;
+using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FA.JustBlog.Core.Models;
-using FA.JustBlog.Core.Service.UnitOfWork;
-using FA.JustBlog.Core.PaginateList;
-using FA.JustBlog.Core.Areas.Admin.ViewModel;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
@@ -155,20 +150,18 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post);
+
             var listTag = from T in _context.Tags
-                          join x in (
-                            from p in _context.Posts
-                            join pt in _context.PostTag on p.Id equals pt.Id
-                            where p.Id == id
-                            select pt
-                          ) on T.Id equals x.TagId into gj
-                          from sub in gj.DefaultIfEmpty()
-                          select new ListPostTag
+                          join pt in _context.PostTag.Where(x=>x.PostId == id)
+                             on T.Id equals pt.TagId into gj
+                           from x in gj.DefaultIfEmpty()
+                          select new
                           {
-                              TagId = T.Id,
                               TagName = T.Name,
-                              IsSelected = sub.TagId > 0 ? sub.TagId : 0
+                              TagId = T.Id,
+                              IsSelected = x.TagId !=null
                           };
+
 
             ViewBag.ListTag = listTag.ToList();
             return View(post);
@@ -179,7 +172,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,View,CategoryId,CreatedDate")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,View,CategoryId,IsPublished")] Post post,List<int> PostTags)
         {
             if (id != post.Id)
             {
@@ -188,9 +181,19 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(post);
+                    var listOldPostTag = _context.PostTag.Where(x=>x.PostId == post.Id).ToList();
+                    _context.PostTag.RemoveRange(listOldPostTag);
+
+                    List<PostTag> listNewPostTag = new List<PostTag>();
+                    foreach(var item in PostTags)
+                    {
+                        listNewPostTag.Add(new PostTag { PostId = post.Id, TagId = item });
+                    }
+                    await _context.PostTag.AddRangeAsync(listNewPostTag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -242,6 +245,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             if (post != null)
             {
                 _context.Posts.Remove(post);
+                
             }
             
             await _context.SaveChangesAsync();

@@ -4,6 +4,7 @@ using FA.JustBlog.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FA.JustBlog.Core.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    partial class BlogContextModelSnapshot : ModelSnapshot
+    [Migration("20231208051902_deleteColumnPostIdCategory")]
+    partial class deleteColumnPostIdCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +55,21 @@ namespace FA.JustBlog.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4285),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(3989),
                             Description = "EF Post",
                             Name = "Entity Framework"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4300),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4003),
                             Description = "MVC Post",
                             Name = "MVC"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4301),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4004),
                             Description = "C# Post",
                             Name = "C#"
                         });
@@ -101,49 +104,49 @@ namespace FA.JustBlog.Core.Migrations
                         {
                             Id = 1,
                             Content = "Post 1 rat hay, tuyet voi",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4615),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4333),
                             PostId = 1
                         },
                         new
                         {
                             Id = 2,
                             Content = "Post 1 rat hay, tuyet voi 2",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4616),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4336),
                             PostId = 1
                         },
                         new
                         {
                             Id = 3,
                             Content = "Post 1 rat hay, tuyet voi 3",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4617),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4338),
                             PostId = 1
                         },
                         new
                         {
                             Id = 4,
                             Content = "Post 2 rat hay, tuyet voi",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4618),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4339),
                             PostId = 2
                         },
                         new
                         {
                             Id = 5,
                             Content = "Post 2 rat hay, tuyet voi 2",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4619),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4340),
                             PostId = 2
                         },
                         new
                         {
                             Id = 6,
                             Content = "Post 3 rat hay, tuyet voi",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4620),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4341),
                             PostId = 3
                         },
                         new
                         {
                             Id = 7,
                             Content = "Post 4 rat hay, tuyet voi",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4621),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4342),
                             PostId = 4
                         });
                 });
@@ -188,7 +191,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4540),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4250),
                             IsPublished = true,
                             Title = "Post 1",
                             View = 100
@@ -198,7 +201,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4544),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4255),
                             IsPublished = true,
                             Title = "Post 3",
                             View = 95
@@ -208,7 +211,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4546),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4257),
                             IsPublished = true,
                             Title = "Post 4",
                             View = 20
@@ -218,7 +221,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 4,
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4547),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4260),
                             IsPublished = false,
                             Title = "Post 5",
                             View = 0
@@ -228,7 +231,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 5,
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4549),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4262),
                             IsPublished = false,
                             Title = "Post 2",
                             View = 0
@@ -437,279 +440,73 @@ namespace FA.JustBlog.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4506),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4217),
                             Description = "MVC",
                             Name = "MVC"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4509),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4220),
                             Description = "EF Core",
                             Name = "EF Core"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4510),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4222),
                             Description = "EF Framework",
                             Name = "EF Framework"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4511),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4223),
                             Description = "ADO.NET",
                             Name = "ADO.NET"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4512),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4224),
                             Description = "C#",
                             Name = "C#"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4513),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4225),
                             Description = ".Net",
                             Name = ".Net"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4514),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4227),
                             Description = "ASP.Net",
                             Name = "ASP.Net"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4515),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4228),
                             Description = "VB",
                             Name = "VB"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4516),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4229),
                             Description = "ASP.Net MVC",
                             Name = "ASP.Net MVC"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 12, 8, 15, 31, 27, 238, DateTimeKind.Local).AddTicks(4517),
+                            CreatedDate = new DateTime(2023, 12, 8, 12, 19, 2, 88, DateTimeKind.Local).AddTicks(4230),
                             Description = "RestApi",
                             Name = "RestApi"
                         });
-                });
-
-            modelBuilder.Entity("FA.JustBlog.Core.Models.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AboutMe")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Age")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("Users", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("Roles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("FA.JustBlog.Core.Models.Comment", b =>
@@ -762,57 +559,6 @@ namespace FA.JustBlog.Core.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("FA.JustBlog.Core.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("FA.JustBlog.Core.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FA.JustBlog.Core.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("FA.JustBlog.Core.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FA.JustBlog.Core.Models.Category", b =>

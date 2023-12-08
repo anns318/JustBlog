@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FA.JustBlog.Core.Models
 {
-    public class BlogContext : DbContext
+    public class BlogContext : IdentityDbContext<User>
     {
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         {
@@ -17,6 +19,7 @@ namespace FA.JustBlog.Core.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1,Name = "Entity Framework", Description = "EF Post"},
@@ -77,6 +80,14 @@ namespace FA.JustBlog.Core.Models
                 new Comment { Id = 6, PostId = 3, Content = "Post 3 rat hay, tuyet voi" },
                 new Comment { Id = 7, PostId = 4, Content = "Post 4 rat hay, tuyet voi" }
                 );
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var tableName = entityType.GetTableName();
+                if (tableName.StartsWith("AspNet"))
+                {
+                    entityType.SetTableName(tableName.Substring(6));
+                }
+            }
         }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }

@@ -7,117 +7,120 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
-using System.Drawing.Printing;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class CommentController : Controller
     {
         private readonly BlogContext _context;
 
-        public CategoryController(BlogContext context)
+        public CommentController(BlogContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Category
+        // GET: Admin/Comment
         public async Task<IActionResult> Index(string sortBy, string filtering, int page = 1, int pageSize = 10)
         {
-            var cate = from c in _context.Categories
-                       select c;
             ViewBag.PageSize = pageSize;
             ViewBag.SortBy = sortBy;
+            ViewData["filtering"] = filtering;
 
+            var comment = from b in _context.Comments
+                          select b;
 
             if (!string.IsNullOrWhiteSpace(filtering))
             {
                 ViewData["filtering"] = filtering;
-                cate = cate.Where(x=>x.Name.Contains(filtering));
+                comment = comment.Where(x => x.Content.Contains(filtering));
 
             }
 
             if (!string.IsNullOrWhiteSpace(sortBy))
             {
-                if (sortBy.ToLower() == "name")
+                if (sortBy.ToLower() == "content")
                 {
-                    cate = cate.OrderByDescending(x => x.Name);
+                    comment =   comment.OrderByDescending(x => x.Content);
                 }
                 else if (sortBy.ToLower() == "createdDate")
                 {
-                    cate = cate.OrderByDescending(x => x.CreatedDate);
+                    comment = comment.OrderByDescending(x => x.CreatedDate);
 
                 }
             }
-
-           
-            return View(await PaginatedList<Category>.CreateAsync(cate, page, pageSize));
+            return View(await PaginatedList<Comment>.CreateAsync(comment,page,pageSize));
         }
 
-        // GET: Admin/Category/Details/5
+        // GET: Admin/Comment/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Comments == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var comment = await _context.Comments
+                .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(comment);
         }
 
-        // GET: Admin/Category/Create
+        // GET: Admin/Comment/Create
         public IActionResult Create()
         {
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
             return View();
         }
 
-        // POST: Admin/Category/Create
+        // POST: Admin/Comment/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedDate")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,PostId,Content,CreatedDate")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            return View(comment);
         }
 
-        // GET: Admin/Category/Edit/5
+        // GET: Admin/Comment/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Comments == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment == null)
             {
                 return NotFound();
             }
-            return View(category);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            return View(comment);
         }
 
-        // POST: Admin/Category/Edit/5
+        // POST: Admin/Comment/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedDate")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,Content,CreatedDate")] Comment comment)
         {
-            if (id != category.Id)
+            if (id != comment.Id)
             {
                 return NotFound();
             }
@@ -126,12 +129,12 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!CommentExists(comment.Id))
                     {
                         return NotFound();
                     }
@@ -142,49 +145,51 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            return View(comment);
         }
 
-        // GET: Admin/Category/Delete/5
+        // GET: Admin/Comment/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Comments == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var comment = await _context.Comments
+                .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(comment);
         }
 
-        // POST: Admin/Category/Delete/5
+        // POST: Admin/Comment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
+            if (_context.Comments == null)
             {
-                return Problem("Entity set 'BlogContext.Categories'  is null.");
+                return Problem("Entity set 'BlogContext.Comments'  is null.");
             }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment != null)
             {
-                _context.Categories.Remove(category);
+                _context.Comments.Remove(comment);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool CommentExists(int id)
         {
-            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

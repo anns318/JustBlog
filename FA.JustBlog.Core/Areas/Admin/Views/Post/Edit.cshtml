@@ -1,9 +1,9 @@
-﻿@using FA.JustBlog.Core.Areas.Admin.ViewModel;
+﻿
 @model FA.JustBlog.Core.Models.Post
 
 @{
     ViewData["Title"] = "Edit";
-    var listTag = (IEnumerable<ListPostTag>) ViewBag.ListTag;
+    // var listTag = (IEnumerable<ListPostTag>) ViewBag.ListTag;
 }
 
 <h1>Edit</h1>
@@ -35,30 +35,30 @@
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div> *@
+
             <div class="form-group">
                 <label asp-for="PostTags" class="control-label"></label>
                 <select multiple name="PostTags" class="form-control">
                     @{
-                        foreach (var item in listTag)
+                        foreach (var item in ViewBag.ListTag)
                         {
-                            // if (item.IsSelected)
-                            // {
-                            //     <option value="@item.TagId" selected>@item.TagName</option>
-                            // }else
-                            // {
-                            //     <option value="@item.TagId" >@item.TagName</option>
+                            if (item.IsSelected)
+                            {
+                                <option value="@item.TagId" selected>@item.TagName</option>
+                            }else
+                            {
+                                <option value="@item.TagId" >@item.TagName</option>
 
-                            // }
+                            }
                         }
                     }
                 </select>
 
             </div>
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPublished" /> @Html.DisplayNameFor(model => model.IsPublished)
+                </label>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
