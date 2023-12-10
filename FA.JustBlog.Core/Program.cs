@@ -1,9 +1,14 @@
-﻿using FA.JustBlog.Core.Models;
+using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
 using FA.JustBlog.Core.Service.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using FA.JustBlog.Core.Models;
+using FA.JustBlog.Core.Service.MailService;
+using System.Configuration;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using FA.JustBlog.Core.DataSeed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +19,26 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddRazorPages();
+
 builder.Services.AddDbContext<BlogContext>(options =>
 {
     options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("default"));
 });
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BlogContext>()
+
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    //.AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<BlogContext>()
+    .AddSignInManager<SignInManager<User>>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddOptions();                                        // Kích hoạt Options
+var mailsettings = builder.Configuration.GetSection("MailSettings");  // đọc config
+builder.Services.Configure<MailSettings>(mailsettings);               // đăng ký để Inject
+
+builder.Services.AddScoped<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
+
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -42,7 +61,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;  // Email là duy nhất
 
     // Cấu hình đăng nhập.
-    options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+    options.SignIn.RequireConfirmedAccount = false;      // Cấu hình xác thực địa chỉ email (email phải tồn tại)
     options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 });
 
@@ -61,14 +80,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 //app.MapAreaControllerRoute(
 //    name: "PostSort",
 //    areaName: "Admin",
 //    pattern: "Admin/{controller}/{action}/{sortBy?}",
 //    defaults: new { area = "Admin", controller = "Post", action = "Index" }
 //    );
+
 app.MapAreaControllerRoute(
     name: "defaultAdmin",
     areaName: "Admin",
@@ -101,5 +123,10 @@ app.MapControllerRoute(
     defaults: new { controller = "Tag", action = "PostByTag" } 
     );
 
+using (var scope = app.Services.CreateScope())
+{
+   await SeedRole.CreateRole(scope.ServiceProvider);
+}
 
+app.MapRazorPages();
 app.Run();

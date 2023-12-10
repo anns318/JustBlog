@@ -26,6 +26,7 @@
 
                     </li>
                     @await Component.InvokeAsync("Category")
+                    <partial name="_LoginPartial" />
                 </ul>
             </div>
         </div>
@@ -46,7 +47,7 @@
   
     <div class="container">
         <div class="d-flex" style="gap:10px">
-            <div >
+            <div class="col-lg-7">
                 @RenderBody()
 
 

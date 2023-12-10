@@ -4,7 +4,8 @@ namespace FA.JustBlog.Core.Models
 {
     public class User : IdentityUser
     {
-        public string Age { get; set; }
-        public string AboutMe {  get; set; }
+        public int? Age { get; set; } = 0;
+        [PersonalData]
+        public string? AboutMe {  get; set; }
     }
 }
