@@ -1,11 +1,13 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
 using FA.JustBlog.Core.Service.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace FA.JustBlog.Core.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork unitOfWork;

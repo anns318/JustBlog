@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,BlogOwner,Contributor,User")]
     public class CategoryController : Controller
     {
         private readonly BlogContext _context;
@@ -55,6 +57,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Category/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -73,6 +76,8 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Category/Create
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
+
         public IActionResult Create()
         {
             return View();
@@ -83,6 +88,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize("ForCreateSelectUpdate")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedDate")] Category category)
         {
             if (ModelState.IsValid)
@@ -95,6 +101,8 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Category/Edit/5
+        [Authorize("ForCreateSelectUpdate")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -115,6 +123,8 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize("ForCreateSelectUpdate")]
+
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedDate")] Category category)
         {
             if (id != category.Id)

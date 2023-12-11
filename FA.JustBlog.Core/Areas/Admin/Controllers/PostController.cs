@@ -1,6 +1,7 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
 using FA.JustBlog.Core.Service.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,BlogOwner,Contributor,User")]
     public class PostController : Controller
     {
         private readonly BlogContext _context;
@@ -19,6 +21,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "Admin,BlogOwner,Contributor,User")]
         // GET: Admin/Post
         public async Task<IActionResult> Index(string sortBy,string filtering,int page = 1,int pageSize = 10)
         {
@@ -84,6 +87,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post/Details/5
+        [Authorize(Roles ="Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -103,6 +107,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post/Create
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public IActionResult Create()
         {
             var listCate = _context.Categories.ToList();
@@ -117,6 +122,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> Create([Bind("Id,Title,Content,View,CategoryId,CreatedDate,IsPublished")] Post post,List<int> PostTags)
         {
             if (ModelState.IsValid)
@@ -137,6 +143,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post/Edit/5
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -144,7 +151,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts.Include(p=>p.PostTags).FirstOrDefaultAsync(x=>x.Id == id);
             if (post == null)
             {
                 return NotFound();
@@ -162,6 +169,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                               IsSelected = x.TagId !=null
                           };
 
+            //ViewBag.Tag = new MultiSelectList(_context.Tags, "Id", "Name", post.PostTags.Select(pt => pt.TagId).ToList());
 
             ViewBag.ListTag = listTag.ToList();
             return View(post);
@@ -172,6 +180,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,View,CategoryId,IsPublished")] Post post,List<int> PostTags)
         {
             if (id != post.Id)
@@ -214,6 +223,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post/Delete/5
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -235,6 +245,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // POST: Admin/Post/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,BlogOwner,Contributor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Posts == null)

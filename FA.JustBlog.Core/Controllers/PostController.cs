@@ -1,12 +1,15 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.Service.ModelRepository;
 using FA.JustBlog.Core.Service.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FA.JustBlog.Core.Controllers
 {
+    [AllowAnonymous]
     public class PostController : Controller
     {
+
         private readonly IUnitOfWork unitOfWork;
         public PostController(IUnitOfWork unitOfWork)
         {

@@ -38,6 +38,7 @@
 
             <div class="form-group">
                 <label asp-for="PostTags" class="control-label"></label>
+                @* <select asp-for="PostTags" class="form-control" asp-items="ViewBag.Tag" multiple></select> *@
                 <select multiple name="PostTags" class="form-control">
                     @{
                         foreach (var item in ViewBag.ListTag)

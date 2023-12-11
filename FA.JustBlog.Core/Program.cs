@@ -29,6 +29,7 @@ builder.Services.AddDbContext<BlogContext>(options =>
 
 builder.Services.AddIdentity<User, IdentityRole>()
     //.AddRoles<IdentityRole>()
+    .AddDefaultUI()
     .AddEntityFrameworkStores<BlogContext>()
     .AddSignInManager<SignInManager<User>>()
     .AddDefaultTokenProviders();
@@ -63,8 +64,20 @@ builder.Services.Configure<IdentityOptions>(options =>
     // Cấu hình đăng nhập.
     options.SignIn.RequireConfirmedAccount = false;      // Cấu hình xác thực địa chỉ email (email phải tồn tại)
     options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ForCreateSelectUpdate", policy => policy.RequireRole("Admin,BlogOwer,Contributor"));
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
+    options.LogoutPath = "/Logout";
+});
 
 var app = builder.Build();
 

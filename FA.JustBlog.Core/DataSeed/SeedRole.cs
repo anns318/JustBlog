@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FA.JustBlog.Core.DataSeed
 {
-    public class SeedRole 
+    public class SeedRole
     {
         public static async Task CreateRole(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            string[] roleNames = { "Admin", "BlogOwner", "Contributor" ,"User"};
+            string[] roleNames = { "Admin", "BlogOwner", "Contributor", "User" };
 
 
             foreach (var roleName in roleNames)
@@ -23,31 +23,58 @@ namespace FA.JustBlog.Core.DataSeed
             }
 
             //Here you could create a super user who will maintain the web app
-            var admin = new User
+            List<User> listUser = new List<User> { new User
             {
 
                 //UserName = Configuration["AppSettings:UserName"],
                 //Email = Configuration["AppSettings:UserEmail"]
-                  UserName = "an310898@gmail.com",
-                Email = "an310898@gmail.com",
+                  UserName = "admin@gmail.com",
+                Email = "admin@gmail.com",
                 EmailConfirmed = true
-            };
+            },
+            new User
+            {
+                UserName = "blogowner@gmail.com",
+                Email = "blogowner@gmail.com",
+                EmailConfirmed = true
+            },
+            new User
+            {
+                UserName = "contributor@gmail.com",
+                Email = "contributor@gmail.com",
+                EmailConfirmed = true
+            },
+            new User
+            {
+                UserName = "user@gmail.com",
+                Email = "user@gmail.com",
+                EmailConfirmed = true
+            }
+        };
+
             //Ensure you have these values in your appsettings.json file
             string userPWD = "123123";
-            var _user = await UserManager.FindByEmailAsync(admin.Email);
-
-            if (_user == null)
+            int i = 0;
+            foreach(var item in listUser)
             {
-                var createAdmin = await UserManager.CreateAsync(admin, userPWD);
-                if (createAdmin.Succeeded)
+                var _user = await UserManager.FindByEmailAsync(item.Email);
+                if (_user == null)
                 {
-                    //here we tie the new user to the role
-                    await UserManager.AddToRoleAsync(admin, "Admin");
-
+                    var createAdmin = await UserManager.CreateAsync(item, userPWD);
+                    if (createAdmin.Succeeded)
+                    {
+                        //here we tie the new user to the role
+                        await UserManager.AddToRoleAsync(item, roleNames[i]);
+                    }
                 }
+                i++;
             }
+
+            
+
+            
         }
 
-       
+
     }
 }

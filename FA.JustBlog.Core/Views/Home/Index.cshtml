@@ -5,13 +5,31 @@
 
 <h1>Lastest Post</h1>
 <hr />
-<div id="lastestPost">
+<div>
+   <div class="d-flex">
+        <div id="lastestPost">
+        </div>
+        <div>
+        </div>
+        <div>
+            <partial name="~/Views/Home/_PartialAboutCard.cshtml" />
+            <div id="popularTag">
+            </div>
+        </div>
+   </div>
 
+    <div>
+        <h1>Most Viewed Post</h1>
+        <hr />
+        <div id="MostViewedPosts">
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     <script>
         $('#lastestPost').load("/Post/LatestPosts")
-
+        $('#MostViewedPosts').load("/Post/MostViewedPosts")
+        $('#popularTag').load("/Tag/PopularTags")
     </script>
 }
