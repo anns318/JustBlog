@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FA.JustBlog.Core", "FA.JustBlog.Core\FA.JustBlog.Core.csproj", "{3B6125B9-D141-4439-A729-465D3FC8AE16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FA.JustBlog.Log4Net", "FA.JustBlog.Log4Net\FA.JustBlog.Log4Net.csproj", "{FFF90654-406A-4EAD-A1AC-A80EBEAF5358}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3B6125B9-D141-4439-A729-465D3FC8AE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B6125B9-D141-4439-A729-465D3FC8AE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B6125B9-D141-4439-A729-465D3FC8AE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF90654-406A-4EAD-A1AC-A80EBEAF5358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF90654-406A-4EAD-A1AC-A80EBEAF5358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF90654-406A-4EAD-A1AC-A80EBEAF5358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF90654-406A-4EAD-A1AC-A80EBEAF5358}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

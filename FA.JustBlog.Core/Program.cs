@@ -19,6 +19,8 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<BlogContext>(options =>
@@ -70,6 +72,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ForCreateSelectUpdate", policy => policy.RequireRole("Admin,BlogOwer,Contributor"));
+    options.AddPolicy("OnlyBlogOwner", policy => policy.RequireRole("Admin,BlogOwner"));
+    options.AddPolicy("AllowAll", policy => policy.RequireRole("Admin,BlogOwner,Contributor,User"));
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -78,6 +82,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/AccessDenied";
     options.LogoutPath = "/Logout";
 });
+
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
@@ -110,6 +116,7 @@ app.MapAreaControllerRoute(
     pattern: "Admin/{controller=Post}/{action=Index}/{id?}",
     defaults: new { area = "Admin", controller = "Post", action = "Index" }
     );
+
 //app.MapAreaControllerRoute(
 //    name: "PostWithPageAndFilter",
 //    areaName: "Admin",

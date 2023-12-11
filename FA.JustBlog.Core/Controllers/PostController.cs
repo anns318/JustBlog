@@ -11,9 +11,11 @@ namespace FA.JustBlog.Core.Controllers
     {
 
         private readonly IUnitOfWork unitOfWork;
-        public PostController(IUnitOfWork unitOfWork)
+        private readonly ILogger _logger;
+        public PostController(IUnitOfWork unitOfWork, ILogger<PostController> logger)
         {
             this.unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public IActionResult PostDetail(int year, int month, string title)
         {
@@ -22,6 +24,7 @@ namespace FA.JustBlog.Core.Controllers
         }
         public IActionResult MostViewedPosts()
         {
+            _logger.LogInformation("Get most view post");
             List<Post> list = unitOfWork.postRepository.Find(x=>x.IsPublished).OrderByDescending(x => x.View).Take(5).ToList();
             return PartialView("_ListPost", list);
         }

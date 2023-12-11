@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize("AllowAll")]
     public class TagController : Controller
     {
         private readonly BlogContext _context;
@@ -70,6 +72,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tag/Create
+        [Authorize("ForCreateSelectUpdate")]
         public IActionResult Create()
         {
             return View();
@@ -80,6 +83,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize("ForCreateSelectUpdate")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedDate")] Tag tag)
         {
             if (ModelState.IsValid)
@@ -92,6 +96,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tag/Edit/5
+        [Authorize("ForCreateSelectUpdate")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Tags == null)
@@ -112,6 +117,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize("ForCreateSelectUpdate")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedDate")] Tag tag)
         {
             if (id != tag.Id)
@@ -143,6 +149,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tag/Delete/5
+        [Authorize("OnlyBlogOwner")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Tags == null)
@@ -163,6 +170,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         // POST: Admin/Tag/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize("OnlyBlogOwner")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Tags == null)

@@ -19,24 +19,24 @@
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" href="/Admin">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+       @*  <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
             </div>
-        </form>
+        </form> *@
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                   @*  <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li><hr class="dropdown-divider" /></li>
+                    <li><hr class="dropdown-divider" /></li> *@
                     <li>
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"  method="post">
                         <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -61,12 +61,13 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" asp-controller="Post" asp-action="Index" asp-route-sortBy="Recent">Most Recent Post</a>
-                                    <a class="nav-link" asp-controller="Post" asp-action="Index" asp-route-sortBy="Viewed">Most Viewed Post</a>
-                                    <a class="nav-link" asp-controller="Post" asp-action="Index" asp-route-sortBy="Interesting">Most Interesting Post</a>
-                                    <a class="nav-link" asp-controller="Post" asp-action="Index" asp-route-filtering="published">Published Post</a>
-                                    <a class="nav-link" asp-controller="Post" asp-action="Index" asp-route-filtering="unpublished">Un-Published Post</a>
-                                    @* <a class="nav-link" href="/admin/Post/Index?sortBy=Viewed">Most Viewed Post</a>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="Index" asp-route-sortBy="Recent">Most Recent Post</a>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="Index" asp-route-sortBy="Viewed">Most Viewed Post</a>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="Index" asp-route-sortBy="Interesting">Most Interesting Post</a>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="Index" asp-route-filtering="published">Published Post</a>
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="Index" asp-route-filtering="unpublished">Un-Published Post</a>
+                                   @*  <a class="nav-link" href="/admin/Post/Index?sortBy=Recent">Most Recent Post</a>
+                                    <a class="nav-link" href="/admin/Post/Index?sortBy=Viewed">Most Viewed Post</a>
                                     <a class="nav-link" href="/admin/Post/Index?sortBy=Interesting">Most Interesting Post</a>
                                     <a class="nav-link" href="/admin/Post/Index?filtering=published">Published Post</a>
                                     <a class="nav-link" href="/admin/Post/Index?filtering=unpublished">Un-Published Post</a> *@
@@ -80,7 +81,7 @@
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" asp-action="Index" asp-controller="Category">Category</a>
+                                    <a class="nav-link" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapsePages">
@@ -90,7 +91,7 @@
                             </a>
                             <div class="collapse" id="collapseComment" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" asp-action="Index" asp-controller="Comment">Comment</a>
+                                    <a class="nav-link" asp-action="Index" asp-controller="Comment" asp-area="Admin">Comment</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseTag" aria-expanded="false" aria-controls="collapsePages">
@@ -100,7 +101,7 @@
                             </a>
                             <div class="collapse" id="collapseTag" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" asp-action="Index" asp-controller="Tag">Tag</a>
+                                    <a class="nav-link" asp-action="Index" asp-controller="Tag" asp-area="Admin">Tag</a>
                                 </nav>
                             </div>
                             @* <div class="sb-sidenav-menu-heading">Addons</div>
