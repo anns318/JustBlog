@@ -8,6 +8,7 @@ namespace FA.JustBlog.Core.Models
     {
         public int Id { get; set; }
         public string Title {  get; set; }
+        public string? ShortDescription { get; set; } 
         public string Content {  get; set; }
         public int View { get; set; }
         [DisplayName("Category")]
@@ -17,6 +18,7 @@ namespace FA.JustBlog.Core.Models
         [DisplayName("Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public virtual List<PostRate>? PostRate { get; set; }
+        public virtual List<Comment>? Comment { get; set; }
         public bool IsPublished { get; set; } = false;
     }
 }

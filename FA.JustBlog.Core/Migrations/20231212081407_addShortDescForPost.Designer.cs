@@ -4,6 +4,7 @@ using FA.JustBlog.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FA.JustBlog.Core.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    partial class BlogContextModelSnapshot : ModelSnapshot
+    [Migration("20231212081407_addShortDescForPost")]
+    partial class addShortDescForPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +55,21 @@ namespace FA.JustBlog.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9029),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6520),
                             Description = "EF Post",
                             Name = "Entity Framework"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9044),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6538),
                             Description = "MVC Post",
                             Name = "MVC"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9045),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6539),
                             Description = "C# Post",
                             Name = "C#"
                         });
@@ -149,7 +152,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9245),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6757),
                             IsPublished = true,
                             ShortDescription = "Post 1",
                             Title = "Post 1",
@@ -160,7 +163,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9250),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6766),
                             IsPublished = true,
                             ShortDescription = "Short post 2",
                             Title = "Post 3",
@@ -171,7 +174,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9251),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6767),
                             IsPublished = true,
                             ShortDescription = "Short post 3",
                             Title = "Post 4",
@@ -182,7 +185,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 4,
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9253),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6769),
                             IsPublished = false,
                             ShortDescription = "Short post 4",
                             Title = "Post 5",
@@ -193,7 +196,7 @@ namespace FA.JustBlog.Core.Migrations
                             Id = 5,
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9254),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6770),
                             IsPublished = false,
                             ShortDescription = "Short post 5",
                             Title = "Post 2",
@@ -403,70 +406,70 @@ namespace FA.JustBlog.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9199),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6719),
                             Description = "MVC",
                             Name = "MVC"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9202),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6723),
                             Description = "EF Core",
                             Name = "EF Core"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9204),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6725),
                             Description = "EF Framework",
                             Name = "EF Framework"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9205),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6726),
                             Description = "ADO.NET",
                             Name = "ADO.NET"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9206),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6727),
                             Description = "C#",
                             Name = "C#"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9207),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6728),
                             Description = ".Net",
                             Name = ".Net"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9208),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6729),
                             Description = "ASP.Net",
                             Name = "ASP.Net"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9209),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6730),
                             Description = "VB",
                             Name = "VB"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9211),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6731),
                             Description = "ASP.Net MVC",
                             Name = "ASP.Net MVC"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 12, 12, 15, 49, 32, 963, DateTimeKind.Local).AddTicks(9212),
+                            CreatedDate = new DateTime(2023, 12, 12, 15, 14, 7, 469, DateTimeKind.Local).AddTicks(6732),
                             Description = "RestApi",
                             Name = "RestApi"
                         });

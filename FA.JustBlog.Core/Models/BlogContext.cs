@@ -39,11 +39,11 @@ namespace FA.JustBlog.Core.Models
                 new Tag { Id = 10, Name = "RestApi", Description = "RestApi" }
                 );
             modelBuilder.Entity<Post>().HasData(
-                new Post { Id = 1,Title = "Post 1", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 100,CategoryId = 1,IsPublished = true },
-                new Post { Id = 2, Title = "Post 3", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 95, CategoryId = 2, IsPublished = true },
-                new Post { Id = 3, Title = "Post 4", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 20, CategoryId = 1, IsPublished = true },
-                new Post { Id = 4, Title = "Post 5", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 0, CategoryId = 3 },
-                new Post { Id =5, Title = "Post 2", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 0 , CategoryId = 2}
+                new Post { Id = 1,Title = "Post 1",ShortDescription= "Post 1", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 100,CategoryId = 1,IsPublished = true },
+                new Post { Id = 2, Title = "Post 3",ShortDescription = "Short post 2", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 95, CategoryId = 2, IsPublished = true },
+                new Post { Id = 3, Title = "Post 4", ShortDescription = "Short post 3", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 20, CategoryId = 1, IsPublished = true },
+                new Post { Id = 4, Title = "Post 5", ShortDescription = "Short post 4", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 0, CategoryId = 3 },
+                new Post { Id =5, Title = "Post 2", ShortDescription = "Short post 5", Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", View = 0 , CategoryId = 2}
                 );
             modelBuilder.Entity<PostTag>().HasData(
                     new PostTag { Id = 1, PostId = 1,TagId = 1},
@@ -70,16 +70,16 @@ namespace FA.JustBlog.Core.Models
                 new PostRate { Id = 10, PostId = 3, Rate = 2 },
                 new PostRate { Id = 11, PostId = 3, Rate = 1 }
                 );
-            modelBuilder.Entity<Comment>().HasData(
+            //modelBuilder.Entity<Comment>().HasData(
 
-                new Comment { Id = 1, PostId = 1, Content = "Post 1 rat hay, tuyet voi" },
-                new Comment { Id = 2, PostId = 1, Content = "Post 1 rat hay, tuyet voi 2" },
-                new Comment { Id = 3, PostId = 1, Content = "Post 1 rat hay, tuyet voi 3" },
-                new Comment { Id = 4, PostId = 2, Content = "Post 2 rat hay, tuyet voi" },
-                new Comment { Id = 5, PostId = 2, Content = "Post 2 rat hay, tuyet voi 2" },
-                new Comment { Id = 6, PostId = 3, Content = "Post 3 rat hay, tuyet voi" },
-                new Comment { Id = 7, PostId = 4, Content = "Post 4 rat hay, tuyet voi" }
-                );
+            //    new Comment { Id = 1, PostId = 1, Content = "Post 1 rat hay, tuyet voi" },
+            //    new Comment { Id = 2, PostId = 1, Content = "Post 1 rat hay, tuyet voi 2" },
+            //    new Comment { Id = 3, PostId = 1, Content = "Post 1 rat hay, tuyet voi 3" },
+            //    new Comment { Id = 4, PostId = 2, Content = "Post 2 rat hay, tuyet voi" },
+            //    new Comment { Id = 5, PostId = 2, Content = "Post 2 rat hay, tuyet voi 2" },
+            //    new Comment { Id = 6, PostId = 3, Content = "Post 3 rat hay, tuyet voi" },
+            //    new Comment { Id = 7, PostId = 4, Content = "Post 4 rat hay, tuyet voi" }
+            //    );
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var tableName = entityType.GetTableName();
@@ -89,6 +89,7 @@ namespace FA.JustBlog.Core.Models
                 }
             }
         }
+        public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTag { get; set; }

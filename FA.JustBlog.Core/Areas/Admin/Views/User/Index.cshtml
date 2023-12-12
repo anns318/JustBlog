@@ -1,0 +1,106 @@
+﻿@using FA.JustBlog.Core.Models
+@using FA.JustBlog.Core.PaginateList
+@using Microsoft.AspNetCore.Identity
+@model PaginatedList<User>
+
+@inject RoleManager<IdentityRole> _roleManager
+@inject UserManager<User> _userManager
+@{
+    ViewData["Title"] = "Comment";
+    var pageSize = ViewBag.PageSize;
+    var sortBy = ViewData["sortBy"];
+    var filtering = ViewData["filtering"];
+}
+<h1>Index</h1>
+<div class="d-flex justify-content-between align-center">
+    <form method="get" asp-action="Index" id="formSetPageSize">
+        <select onchange="setPageSize(this)" id="pageSizeSelect" name="pageSize">
+
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+        </select>
+        @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
+        @(filtering != null ? Html.Raw($"<input hidden name='filtering' value='{filtering}' />") : "")
+
+    </form>
+    <form method="get" asp-action="Index" asp-action="index">
+        <input value="@filtering" type="text" name="filtering" />
+        @(sortBy != null ? Html.Raw($"<input hidden name='sortBy' value='{sortBy}' />") : "")
+        @(pageSize != null ? Html.Raw($"<input hidden name='pageSize' value='{pageSize}' />") : "")
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="content">@Html.DisplayNameFor(model => model.TObject.UserName)</a>
+            </th>
+            <th>
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="content">@Html.DisplayNameFor(model => model.TObject.Email)</a>
+            </th>
+            <th>
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="createdDate">Role</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    user
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @{
+                        var roles = await _userManager.GetRolesAsync(item);
+                        foreach(var role in roles)
+                        {
+                            <div>@role</div>
+                        }
+                    }
+
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex - 1)">Previous</a>
+@{
+    for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a class="btn btn-primary @(Model.PageIndex == i ? "active" : "")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@i">@i</a>
+    }
+}
+
+<a class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")" asp-route-pageSize="@ViewBag.PageSize" asp-route-filtering="@(ViewData["filtering"])" asp-route-sortBy="@(ViewData["sortBy"])" asp-route-page="@(Model.PageIndex + 1)">Next</a>
+
+
+@section Scripts {
+    <script>
+        function setPageSize(e) {
+            $("#formSetPageSize").submit();
+        }
+        if (@ViewBag.PageSize != null) {
+            $("#pageSizeSelect").val(@ViewBag.PageSize)
+
+        }
+
+    </script>
+}
