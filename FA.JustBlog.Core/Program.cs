@@ -71,9 +71,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("ForCreateSelectUpdate", policy => policy.RequireRole("Admin,BlogOwer,Contributor"));
-    options.AddPolicy("OnlyBlogOwner", policy => policy.RequireRole("Admin,BlogOwner"));
-    options.AddPolicy("AllowAll", policy => policy.RequireRole("Admin,BlogOwner,Contributor,User"));
+    options.AddPolicy("ForCreateSelectUpdate", policy => policy.RequireRole("Admin", "BlogOwner", "Contributor"));
+    options.AddPolicy("OnlyBlogOwner", policy => policy.RequireRole("Admin", "BlogOwner"));
 });
 
 builder.Services.ConfigureApplicationCookie(options =>

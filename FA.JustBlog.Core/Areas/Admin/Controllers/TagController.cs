@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FA.JustBlog.Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("AllowAll")]
+    [Authorize]
     public class TagController : Controller
     {
         private readonly BlogContext _context;
@@ -21,8 +21,8 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         {
             _context = context;
         }
-
         // GET: Admin/Tag
+        
         public async Task<IActionResult> Index(string sortBy, string filtering, int page = 1, int pageSize = 10)
         {
             ViewBag.PageSize = pageSize;
@@ -54,6 +54,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tag/Details/5
+        [Authorize("ForCreateSelectUpdate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Tags == null)

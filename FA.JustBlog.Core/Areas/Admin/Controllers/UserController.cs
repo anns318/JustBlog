@@ -1,5 +1,6 @@
 ﻿using FA.JustBlog.Core.Models;
 using FA.JustBlog.Core.PaginateList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
         {
             this._userManager = userManager;
         }
-        
+
         public async Task<IActionResult> Index(string sortBy, string filtering, int page = 1, int pageSize = 10)
         {
             var user = from u in _userManager.Users
@@ -48,5 +49,23 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
 
             return View(await PaginatedList<User>.CreateAsync(user, page, pageSize));
         }
+
+        [Authorize("ForCreateSelectUpdate")]
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
     }
 }
