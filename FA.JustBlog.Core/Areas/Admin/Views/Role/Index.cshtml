@@ -1,7 +1,7 @@
 ﻿@using FA.JustBlog.Core.Models
 @using FA.JustBlog.Core.PaginateList
 @using Microsoft.AspNetCore.Identity
-@model PaginatedList<User>
+@model PaginatedList<IdentityRole>
 
 @inject RoleManager<IdentityRole> _roleManager
 @inject UserManager<User> _userManager
@@ -39,13 +39,7 @@
     <thead>
         <tr>
             <th>
-                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="content">@Html.DisplayNameFor(model => model.TObject.UserName)</a>
-            </th>
-            <th>
-                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="content">@Html.DisplayNameFor(model => model.TObject.Email)</a>
-            </th>
-            <th>
-                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="createdDate">Role</a>
+                <a asp-route-pageSize="@pageSize" asp-route-filtering="@filtering" asp-route-sortBy="content">@Html.DisplayNameFor(model => model.TObject.Name)</a>
             </th>
             <th></th>
         </tr>
@@ -55,22 +49,9 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @{
-                        var roles = await _userManager.GetRolesAsync(item);
-                        foreach(var role in roles)
-                        {
-                            <div>@role</div>
-                        }
-                    }
-
-
-                </td>
+                
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

@@ -120,7 +120,7 @@ namespace FA.JustBlog.Core.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.AboutMe = Input.AboutMe;
+                //user.AboutMe = Input.AboutMe;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -128,6 +128,7 @@ namespace FA.JustBlog.Core.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "User");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
