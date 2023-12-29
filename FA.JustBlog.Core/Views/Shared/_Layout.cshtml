@@ -16,6 +16,9 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="/">Just Blog</a>
+            <form method="post" asp-action="Search" asp-controller="Post">
+                <input class="form-control" type="text" name="Search" placeholder="Search" />
+            </form>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -52,8 +55,6 @@
             @RenderBody()
             
         </div>
-       
-       
     </div>
     <partial name="_Footer" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

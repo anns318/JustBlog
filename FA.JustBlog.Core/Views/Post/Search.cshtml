@@ -1,0 +1,29 @@
+﻿@model List<Post>
+
+<h1>Search Post</h1>
+<hr />
+<div>
+    <div class="d-flex">
+        <div id="lastestPost">
+            <partial name="_ListPost" model="Model" />
+        </div>
+       @*  <div>
+            <partial name="~/Views/Home/_PartialAboutCard.cshtml" />
+            <div id="popularTag">
+            </div>
+        </div> *@
+    </div>
+
+  @*   <div>
+        <h1>Most Viewed Post</h1>
+        <hr />
+        <div id="MostViewedPosts">
+        </div>
+    </div> *@
+</div>
+
+@section Scripts {
+    <script>
+        $('#popularTag').load("/Tag/PopularTags")
+    </script>
+}

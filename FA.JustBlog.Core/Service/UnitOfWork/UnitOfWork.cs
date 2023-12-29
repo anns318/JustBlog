@@ -4,9 +4,10 @@ namespace FA.JustBlog.Core.Service.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        
+        public Guid guid { get; set; }
         public UnitOfWork(IPostRepository postRepository,ITagRepository tagRepository,ICategoryRepository categoryRepository)
         {
+            guid = Guid.NewGuid();
             this.tagRepository = tagRepository;
             this.postRepository = postRepository;
             this.categoryRepository = categoryRepository;

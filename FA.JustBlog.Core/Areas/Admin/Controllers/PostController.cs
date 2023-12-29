@@ -34,7 +34,6 @@ namespace FA.JustBlog.Core.Areas.Admin.Controllers
                               select p;
             if(blogContext == null)
             {
-
                 return View(null);
             }
             if (!string.IsNullOrWhiteSpace(filtering))
